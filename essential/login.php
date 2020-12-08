@@ -9,9 +9,9 @@
         $row=mysqli_fetch_assoc($retval);
         if($row>=1)
         {
-         return 1;
+            return json_encode(array("message"=>"success"));
         }else {
-            return 0;
+            return json_encode(array("message"=>"failed"));
         }
     }
    

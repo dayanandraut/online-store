@@ -5,7 +5,7 @@
         $server="localhost"; 
         $user="root"; 
         $pass=""; 
-        $db="projectonlinebookstore"; 
+        $db="onlinestore"; 
         // connect to mysql       
         $conn = mysqli_connect($server, $user, $pass) or die("Sorry, can't connect to the mysql."); 
         if($conn){

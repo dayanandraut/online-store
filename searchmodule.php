@@ -34,6 +34,5 @@ if(isset($_GET['searchBtn']) && isset($_GET['searchQuery']) && !empty($_GET['sea
     }
     
 }
-session_start();
-echo $_SESSION['c_id'];
+
 ?>

@@ -7,11 +7,11 @@
         $query = "select * from customer where email_id = '$username' and password = '$password'";
         $retval = mysqli_query($con, $query );
         $row=mysqli_fetch_assoc($retval);
-        if($row>=1)
+        if($row>0)
         {
-            return json_encode(array("message"=>"success"));
+            return $row;
         }else {
-            return json_encode(array("message"=>"failed"));
+            return false;
         }
     }
    

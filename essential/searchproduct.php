@@ -11,7 +11,8 @@
         if(!$retval){
             die('<br>Could not get data'.mysqli_connect_error());
         } else {
-            return json_encode(mysqli_fetch_assoc($retval));
+            return mysqli_fetch_all($retval, MYSQLI_ASSOC);
+            
         }        
     }
    

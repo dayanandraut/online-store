@@ -1,6 +1,6 @@
 <?php
 session_start();
-if(isset($_SESSION['c_id'])){
+if(isset($_SESSION['customer_logged'])){
     header("Location: searchmodule.php");
 }
 ?>
@@ -27,7 +27,11 @@ if(isset($_POST['loginBtn']) && !empty($_POST['usernameInput']) && !empty($_POST
         $_SESSION['c_name'] = $result['name'];
         $_SESSION['c_email_id'] = $result['email_id'];
         $_SESSION['c_phone_no'] = $result['phone_no'];    
-
+        $_SESSION['c_balance'] = $result['balance'];
+        $_SESSION['customer_logged'] = true;
+        // get nearest seller by customer's address. 
+        // for now keep it one.
+        $_SESSION['s_id'] = 1;
         header("Location: searchmodule.php");
 
     }else{

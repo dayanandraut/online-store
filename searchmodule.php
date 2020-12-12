@@ -5,7 +5,7 @@
 </form>
 
 <?php
-
+session_start();
 if(isset($_GET['searchBtn']) && isset($_GET['searchQuery']) && !empty($_GET['searchQuery'])){
     require_once('essential/product.php');
     $searchQuery = $_GET['searchQuery'];
@@ -24,7 +24,12 @@ if(isset($_GET['searchBtn']) && isset($_GET['searchQuery']) && !empty($_GET['sea
             
             echo " $pname $brand  $price";
             if($availability>0){
-                echo "<a href = basketmodule.php?add_product=$pid>Add to basket</a></td>";
+                if($price<=$_SESSION['c_balance']){
+                    echo "<a href = basketmodule.php?add_product=$pid>Add to basket</a></td>";
+                }else{
+                    echo "<b>Insufficient Balance</b>";
+                }
+                
             }else{
                 echo "Out of stock!";
             }

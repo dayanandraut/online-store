@@ -31,7 +31,7 @@ if(isset($_POST['loginBtn']) && !empty($_POST['usernameInput']) && !empty($_POST
         $_SESSION['customer_logged'] = true;
         // get nearest seller by customer's address. 
         // for now keep it one.
-        $_SESSION['s_id'] = 1;
+        $_SESSION['s_id'] = $result['c_s_id'];
         header("Location: searchmodule.php");
 
     }else{

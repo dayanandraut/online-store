@@ -2,7 +2,7 @@
 
 require_once('essential/basket.php');
 require_once('essential/product.php');
-session_start();
+@session_start();
 $customerId = $_SESSION['c_id'];
 
 if(isset($_GET['add_product']) && !empty($_GET['add_product'])){
@@ -22,6 +22,7 @@ if(isset($_GET['add_product']) && !empty($_GET['add_product'])){
     }else{
         echo "Failed to add Product with id: $productId into your basket";
     }
+    header("Location:index.php?basket");
 }
 
 //----------------------UPDATE PRODUCT QTY-------------------------
@@ -35,6 +36,7 @@ if(isset($_POST['updateQty']) && !empty($_POST['qty']) && !empty($_POST['pid']))
    }else{
        echo "Failed to update";
    }
+   header("Location:index.php?basket");
 }
 
 //------------------------DELETE PRODUCT FROM CART-------------------
@@ -46,9 +48,10 @@ if(isset($_POST['removeproduct']) &&  !empty($_POST['pid'])){
     }else{
         echo "Failed to remove";
     }
+    header("Location:index.php?basket");
 }
 
-
+echo "<div class='centre'>";
 // display total available balance
 echo "<div><b>Available Balance: Rs. ".$_SESSION['c_balance']."</b></div>";
 
@@ -59,6 +62,19 @@ $noOfProducts = sizeof($productsInBasket);
     if($noOfProducts>0){
         echo "<h3>Products in Basket.</h3></br>";
         $total_expense = 0;
+        echo "<table id='baskettble' class='centre-table'>
+            <tr>
+                <th>Placed Date</th>
+                <th>Product</th>
+                <th>Brand</th>
+                <th>Price</th>
+                <th>Quantity</th>                
+                <th>Amount</th>
+                <th>Action</th>
+                
+              
+            </tr> ";       
+        
         for($i = 0; $i< $noOfProducts; $i++){
 
             $pid = $productsInBasket[$i]['product_id'];
@@ -68,26 +84,37 @@ $noOfProducts = sizeof($productsInBasket);
             $availability = $productsInBasket[$i]['availability'];
             $placed_date = $productsInBasket[$i]['placed_date'];
             $quantity = $productsInBasket[$i]['quantity'];
-
-            $total_expense += $quantity * $price;
-            echo " ";
+            $amount = $quantity * $price;
+            $total_expense += $amount;
+          
            $maxQty = min($availability+$quantity, 10);
            $self = $_SERVER['PHP_SELF'];
            echo "
-            <form  method='POST' action='$self'>
-            $placed_date $pname $brand  $price 
-            <input type='number' min='1' max='$maxQty' name='qty' value='$quantity'/>            
-            <input type = 'hidden' name='pid' value = '$pid' />
+           <tr>
+            <form  method='POST' action='basketmodule.php'>
+            <td>$placed_date</td>
+            <td>$pname</td>
+            <td>$brand</td>
+            <td>$price</td>
+            <td><input type='number' min='1' max='$maxQty' name='qty' value='$quantity'/> </td>
+            
+            <td>$amount</td>
+            <td><input type = 'hidden' name='pid' value = '$pid' />
             <input type = 'submit' name='updateQty' value= 'Update'/>
-            <input type = 'submit' name = 'removeproduct' value='Remove'/>
-            </form>
+            <input type = 'submit' name = 'removeproduct' value='Remove'/></td> 
+                       
+            
+            
+            </form></tr>
             ";
             
             echo "</br>";
         }
+        echo "</table>";
         echo "<b>Total Expense: Rs. $total_expense</b></br>";        
         echo "</br>";
     }else{
         echo "<h3>Basket is empty</h3>";
     }
+    echo "</div>";
 ?>

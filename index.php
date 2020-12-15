@@ -19,7 +19,7 @@ if(isset($_GET['logout'])){
       <a href="index.php">Home</a>
            
       
-      <a href="" class="right">About</a>
+      <a href="about.html" class="right">About</a>
 
       <?php 
       if(!isset($_SESSION['customer_logged']) && !isset($_SESSION['seller_logged'])){

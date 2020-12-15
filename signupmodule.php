@@ -8,10 +8,17 @@
         && !empty($_POST['latitude'])
         && !empty($_POST['longitude'])
         && !empty($_POST['Password'])
-        ){          
-           
+        ){         
+            $c_lat = $_POST['latitude'];
+            $c_lon = $_POST['longitude'];
+            $command = escapeshellcmd("python essential/kdtree_nn.py $c_lat $c_lon");            
+            $output = shell_exec($command);           
+            $sid = 1;
+            if($output){
+                $sid = $output;
+            }
             require_once('essential/customer.php');
-            $res = registerCustomer($_POST['CustomerName'], $_POST['Email'], $_POST['Phonenumber'], $_POST['Password'], $_POST['latitude'], $_POST['longitude']);
+            $res = registerCustomer($_POST['CustomerName'], $_POST['Email'], $_POST['Phonenumber'], $_POST['Password'], $_POST['latitude'], $_POST['longitude'], $sid);
             if($res){
                 echo "<h3>Registered Successfully.</h3>";
                header('Location:index.php');
